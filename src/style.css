@@ -3,6 +3,11 @@
   color: white;
 }
 
+.svelte-element {
+  background-color: red;
+  color: white;
+}
+
 .vue-element {
   background-color: green;
   color: white;
