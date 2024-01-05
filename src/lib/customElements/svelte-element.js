@@ -1,15 +1,19 @@
-// main.js
-import MySvelteComponent from '../../components/SvelteCounterApp.svelte';
-
 class SvelteWebComponent extends HTMLElement {
 	constructor() {
 		super();
 		this.svelteComponent = null;
 	}
 
-	connectedCallback() {
+  kebabToPascalCase(str) {
+    return str.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+  }
+
+	async connectedCallback() {
 		// カスタムエレメントにSvelteコンポーネントをマウント
-		this.svelteComponent = new MySvelteComponent({
+    const componentName = this.kebabToPascalCase(this.localName);
+    const module = await import(`../../components/${componentName}.svelte`);
+    const component = module.default
+		this.svelteComponent = new component({
 			target: this,
 		});
 	}
